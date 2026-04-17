@@ -1,0 +1,146 @@
+:root {
+  --ink: #14202b;
+  --muted: #51606b;
+  --sand: #f7f1e6;
+  --card: rgba(255, 249, 239, 0.86);
+  --border: rgba(20, 32, 43, 0.12);
+  --teal: #0f766e;
+  --amber: #c2410c;
+  --shadow: 0 24px 80px rgba(20, 32, 43, 0.12);
+}
+
+html,
+body,
+[data-testid="stAppViewContainer"] {
+  background:
+    radial-gradient(circle at top left, rgba(15, 118, 110, 0.18), transparent 34%),
+    radial-gradient(circle at top right, rgba(194, 65, 12, 0.14), transparent 28%),
+    linear-gradient(180deg, #f3eadc 0%, #efe4d3 52%, #f7f1e6 100%);
+  color: var(--ink);
+  font-family: "Trebuchet MS", "Segoe UI Variable", sans-serif;
+}
+
+h1,
+h2,
+h3,
+[data-testid="stMarkdownContainer"] h1,
+[data-testid="stMarkdownContainer"] h2,
+[data-testid="stMarkdownContainer"] h3 {
+  color: var(--ink);
+  font-family: "Palatino Linotype", "Book Antiqua", serif;
+  letter-spacing: 0.02em;
+}
+
+.hero-panel,
+.demo-shell,
+.answer-card,
+.metric-card {
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+}
+
+.hero-panel {
+  background: linear-gradient(135deg, rgba(255, 249, 239, 0.95), rgba(252, 245, 233, 0.78));
+  border-radius: 28px;
+  margin-bottom: 1.2rem;
+  padding: 1.6rem 1.8rem;
+}
+
+.hero-panel p,
+.metric-label,
+.answer-eyebrow {
+  color: var(--muted);
+}
+
+.hero-kicker {
+  color: var(--teal);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.demo-shell {
+  background: var(--card);
+  border-radius: 24px;
+  margin-bottom: 1rem;
+  padding: 1.2rem;
+  backdrop-filter: blur(12px);
+}
+
+.answer-card {
+  background: rgba(255, 255, 255, 0.72);
+  border-radius: 24px;
+  margin: 1rem 0;
+  padding: 1.2rem 1.3rem;
+}
+
+.answer-card.strong {
+  border-left: 8px solid var(--teal);
+}
+
+.answer-card.caution {
+  border-left: 8px solid var(--amber);
+}
+
+.answer-body {
+  color: var(--ink);
+  font-size: 1rem;
+  line-height: 1.7;
+  white-space: pre-wrap;
+}
+
+.metric-card {
+  background: rgba(255, 255, 255, 0.74);
+  border-radius: 22px;
+  margin-bottom: 1rem;
+  min-height: 118px;
+  padding: 1rem 1.1rem;
+}
+
+.metric-card.strong {
+  border-top: 5px solid var(--teal);
+}
+
+.metric-card.caution {
+  border-top: 5px solid var(--amber);
+}
+
+.metric-label {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.metric-value {
+  color: var(--ink);
+  font-family: "Palatino Linotype", "Book Antiqua", serif;
+  font-size: 2rem;
+  margin-top: 0.35rem;
+}
+
+[data-testid="stSidebar"] {
+  background: rgba(248, 241, 227, 0.92);
+}
+
+[data-testid="stForm"] {
+  background: rgba(255, 255, 255, 0.38);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 1rem;
+}
+
+[data-testid="stExpander"] {
+  background: rgba(255, 255, 255, 0.45);
+  border: 1px solid rgba(20, 32, 43, 0.08);
+  border-radius: 18px;
+}
+
+@media (max-width: 900px) {
+  .hero-panel,
+  .demo-shell,
+  .answer-card {
+    border-radius: 20px;
+    padding: 1rem;
+  }
+}

@@ -1,0 +1,32 @@
+[
+  {
+    "question": "How do I reset MFA after losing my phone?",
+    "expected_doc": "remote_access_policy.md",
+    "must_include": ["identity verification", "24 hours"]
+  },
+  {
+    "question": "What should I do when VPN error 742 appears?",
+    "expected_doc": "laptop_troubleshooting.md",
+    "must_include": ["restart", "TAP adapter"]
+  },
+  {
+    "question": "How long is the self-service password reset link valid?",
+    "expected_doc": "password_reset_faq.csv",
+    "must_include": ["15 minutes"]
+  },
+  {
+    "question": "What is the process for a swollen laptop battery?",
+    "expected_doc": "device_replacement_policy.md",
+    "must_include": ["power off", "one business day"]
+  },
+  {
+    "question": "When is AWS sandbox access approved for new users?",
+    "expected_doc": "cloud_access_faq.md",
+    "must_include": ["one business day", "cloud governance"]
+  },
+  {
+    "question": "What should the service desk capture during a suspicious login incident?",
+    "expected_doc": "identity_incident_runbook.md",
+    "must_include": ["approximate login time", "affected application"]
+  }
+]

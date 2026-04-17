@@ -1,0 +1,26 @@
+[
+  {
+    "error_code": "742",
+    "product": "vpn-client",
+    "meaning": "The VPN adapter or connection stack did not initialize correctly.",
+    "recommended_action": "Restart the device and confirm the TAP adapter is enabled before escalating."
+  },
+  {
+    "error_code": "809",
+    "product": "vpn-client",
+    "meaning": "The remote gateway could not be reached from the current network.",
+    "recommended_action": "Verify local internet access and confirm the home firewall is not blocking VPN traffic."
+  },
+  {
+    "error_code": "A17",
+    "product": "identity-portal",
+    "meaning": "The identity verification step timed out.",
+    "recommended_action": "Restart the verification session and confirm the browser allows the webcam prompt."
+  },
+  {
+    "error_code": "S21",
+    "product": "device-enrollment",
+    "meaning": "The endpoint agent has not checked in since device provisioning.",
+    "recommended_action": "Confirm the device has internet access and rerun the endpoint enrollment profile."
+  }
+]

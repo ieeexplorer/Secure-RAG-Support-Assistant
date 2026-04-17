@@ -1,0 +1,46 @@
+[
+  {
+    "ticket_id": "INC-1042",
+    "status": "investigating",
+    "priority": "high",
+    "summary": "VPN error 742 after Windows update",
+    "assigned_team": "network-operations",
+    "follow_up_notes": [
+      {
+        "author": "triage-bot",
+        "note": "Collected OS version and asked user to reboot before adapter check.",
+        "created_at": "2026-04-18T08:15:00+00:00"
+      }
+    ]
+  },
+  {
+    "ticket_id": "INC-2048",
+    "status": "waiting_for_user",
+    "priority": "medium",
+    "summary": "MFA reset request for lost phone",
+    "assigned_team": "identity-access",
+    "follow_up_notes": [
+      {
+        "author": "service-desk",
+        "note": "Waiting for employee to complete identity verification in the helpdesk portal.",
+        "created_at": "2026-04-18T09:05:00+00:00"
+      }
+    ]
+  },
+  {
+    "ticket_id": "INC-3110",
+    "status": "awaiting_shipment",
+    "priority": "high",
+    "summary": "Laptop battery swelling requires replacement",
+    "assigned_team": "workplace-engineering",
+    "follow_up_notes": []
+  },
+  {
+    "ticket_id": "REQ-9001",
+    "status": "approved",
+    "priority": "low",
+    "summary": "AWS sandbox access for new analyst",
+    "assigned_team": "cloud-governance",
+    "follow_up_notes": []
+  }
+]

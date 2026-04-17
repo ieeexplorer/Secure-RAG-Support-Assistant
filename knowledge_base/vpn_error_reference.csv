@@ -1,0 +1,4 @@
+error_code,symptom,recommended_action,owner
+742,VPN adapter did not initialize,Restart the device and confirm the TAP adapter is enabled,network-operations
+809,Remote gateway unreachable,Confirm local internet access and verify the home firewall is not blocking VPN ports,network-operations
+A17,Identity verification timed out,Restart the verification session and confirm the webcam prompt is allowed,identity-access

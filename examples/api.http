@@ -1,0 +1,47 @@
+@baseUrl = http://127.0.0.1:8000
+@apiKey = demo-support-token
+
+### Health check
+GET {{baseUrl}}/health
+
+### Rebuild the knowledge-base index
+POST {{baseUrl}}/api/v1/ingest
+X-API-Key: {{apiKey}}
+Content-Type: application/json
+
+{
+  "rebuild": true
+}
+
+### Ask a grounded support question
+POST {{baseUrl}}/api/v1/ask
+X-API-Key: {{apiKey}}
+Content-Type: application/json
+
+{
+  "question": "How do I reset MFA after losing my phone?",
+  "top_k": 4
+}
+
+### Run the evaluation dataset
+POST {{baseUrl}}/api/v1/evaluate
+X-API-Key: {{apiKey}}
+
+### Look up a support ticket
+GET {{baseUrl}}/api/v1/tools/ticket/INC-2048
+X-API-Key: {{apiKey}}
+
+### Look up an error code
+GET {{baseUrl}}/api/v1/tools/error/742
+X-API-Key: {{apiKey}}
+
+### Create a follow-up note
+POST {{baseUrl}}/api/v1/tools/follow-up
+X-API-Key: {{apiKey}}
+Content-Type: application/json
+
+{
+  "ticket_id": "INC-2048",
+  "author": "portfolio-demo",
+  "note": "Identity verification completed. Ready for MFA reset approval."
+}

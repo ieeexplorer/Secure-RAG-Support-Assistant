@@ -3,7 +3,8 @@ __pycache__/
 .pytest_cache/
 .mypy_cache/
 .ruff_cache/
-.streamlit/
+.streamlit/*
+!.streamlit/config.toml
 .env
 artifacts/
 chroma_db/

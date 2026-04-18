@@ -1,48 +1,90 @@
-# secure-rag-support-assistant
+# Secure RAG Support Assistant
 
-A production-style RAG assistant that answers support questions from a private knowledge base, returns grounded responses with citations, evaluates answer quality, and optionally exposes safe support tools over MCP.
+A portfolio-grade retrieval augmented generation system for IT and support operations. It ingests a private knowledge base, returns grounded answers with citations, exposes safe support tools through FastAPI and MCP, and ships with a benchmarkable local demo.
 
-## What it includes
+![Streamlit demo](outputs/screenshots/streamlit-demo.png)
 
-- FastAPI service for ingestion, question answering, and evaluation
-- FastAPI authentication with an `X-API-Key` header for demo routes
-- Structured request logging with an `X-Request-ID` response header
-- Chroma-backed semantic retrieval over Markdown, PDF, TXT, and CSV sources
-- Citation-aware answers with source names and line ranges
-- Heuristic evaluation for relevance, faithfulness, and retrieval hit rate
-- Optional MCP server with allowlisted support tools
-- Streamlit UI with a cleaner operator-style demo layout
-- Docker support and sample support knowledge base content
+## Why This Repo Stands Out
+
+- End-to-end AI system: ingestion, retrieval, answer generation, evaluation, API, UI, and MCP tooling in one repo.
+- Secure-by-default demo: protected API routes, request IDs, allowlisted tools, and weak-evidence fallback behavior.
+- Runnable without paid services: local extractive mode works with the included dummy knowledge base and mock support data.
+- Honest evaluation story: the repo includes a committed benchmark snapshot instead of relying on screenshots alone.
+- GitHub-ready engineering signal: Docker support, tests, and CI are included so the project feels production-minded.
+
+## Demo Artifacts
+
+- [Architecture walkthrough](docs/architecture.md)
+- [HTTP API examples](examples/api.http)
+- [Evaluation summary](outputs/reports/evaluation_summary.md)
+- [Raw evaluation snapshot](outputs/reports/evaluation_snapshot.json)
+- [Streamlit screenshot](outputs/screenshots/streamlit-demo.png)
+
+## What It Does
+
+- Indexes Markdown, TXT, CSV, and PDF support documents into Chroma.
+- Retrieves relevant passages and returns cited answers with confidence and lightweight quality metrics.
+- Exposes ingestion, question answering, evaluation, and support-tool routes through FastAPI.
+- Provides a Streamlit UI for recruiter-friendly demos and a FastMCP server for allowlisted tool access.
+- Evaluates answer quality on a small benchmark set stored in `data/eval/questions.json`.
+
+## Current Benchmark Snapshot
+
+Run on the bundled demo corpus and evaluation set:
+
+| Metric | Value |
+| --- | ---: |
+| Sample count | 6 |
+| Average relevance | 0.5669 |
+| Average faithfulness | 0.7406 |
+| Average retrieval hit | 1.0000 |
+
+The current snapshot shows strong retrieval coverage and visible room to improve answer compression in extractive mode. That is the right tradeoff for a showcase repo: retrieval is grounded, limitations are measurable, and the next engineering steps are clear.
 
 ## Architecture
 
-1. Documents are loaded from the knowledge base directory.
-2. Each document is chunked into overlapping line-based passages.
-3. Chunks are embedded and indexed in Chroma.
-4. A query retrieves the most relevant passages.
-5. The assistant answers with citations and a confidence estimate.
-6. Evaluation scripts score answer quality on a small benchmark set.
+```mermaid
+flowchart LR
+    KB[Knowledge base files] --> Load[Loaders]
+    Load --> Chunk[Chunking]
+    Chunk --> Store[Chroma vector store]
 
-## Project layout
+    Client[FastAPI / Streamlit / MCP client] --> API[Request layer]
+    API --> Pipeline[RAG assistant pipeline]
+    Pipeline --> Retrieve[Retrieve top-k chunks]
+    Store --> Retrieve
+    Retrieve --> Generate[LLM or extractive generator]
+    Generate --> Eval[Confidence + evaluation summary]
+    Eval --> Response[Cited answer]
 
-```text
-app/
-  api/               FastAPI routes
-  eval/              Evaluation metrics and runner
-  rag/               Loaders, chunking, vector store, generation pipeline
-  tools/             Allowlisted support tools
-  ui/                Streamlit demo
-data/
-  eval/              Sample benchmark questions
-  mock/              Mock tool backing data
-knowledge_base/      Sample support documents
-scripts/             CLI entrypoints for ingest and evaluation
-tests/               Focused unit tests
+    API --> Tools[Allowlisted support tools]
+    Tools --> Mock[Local mock support data]
 ```
 
-## Quick start
+See [docs/architecture.md](docs/architecture.md) for the component breakdown, request flow, and security boundaries.
 
-### 1. Install dependencies
+## Repository Layout
+
+```text
+.
+├── .github/workflows/        CI checks
+├── .streamlit/config.toml    Demo-friendly Streamlit config
+├── app/                      FastAPI app, RAG pipeline, MCP server, Streamlit UI
+├── data/                     Evaluation set and mock support data
+├── docs/                     Architecture documentation
+├── examples/                 Ready-to-run API examples
+├── knowledge_base/           Demo support documents
+├── outputs/                  Screenshot and benchmark artifacts
+├── scripts/                  CLI entrypoints
+├── tests/                    Focused unit tests
+├── Dockerfile                Container runtime
+├── requirements.txt          Python dependencies
+└── .env.example              Safe local config template
+```
+
+## Quick Start
+
+### 1. Create a virtual environment
 
 ```bash
 python -m venv .venv
@@ -50,15 +92,17 @@ python -m venv .venv
 pip install -r requirements.txt
 ```
 
-### 2. Configure environment
+Python 3.11 is the safest target for local runs and matches the Docker image.
+
+### 2. Configure local settings
 
 ```bash
 copy .env.example .env
 ```
 
-The example values are dummy-safe defaults for local demos. LLM mode is disabled by default, so the dummy `OPENAI_API_KEY` is ignored unless you explicitly set `ENABLE_LLM=true` and replace it with a real key.
+The repo defaults to extractive mode. You only need a real OpenAI key if you set `ENABLE_LLM=true`.
 
-### 3. Ingest the knowledge base
+### 3. Build the vector index
 
 ```bash
 python scripts/ingest_kb.py
@@ -70,25 +114,27 @@ python scripts/ingest_kb.py
 uvicorn app.main:app --reload
 ```
 
-### 5. Ask a question
+### 5. Try the API
+
+Use [examples/api.http](examples/api.http) or this Windows `curl` example:
 
 ```bash
 curl -X POST http://127.0.0.1:8000/api/v1/ask ^
   -H "X-API-Key: demo-support-token" ^
   -H "Content-Type: application/json" ^
-  -d "{\"question\": \"How do I reset MFA after a lost phone?\"}"
+  -d "{\"question\": \"How do I reset MFA after losing my phone?\"}"
 ```
 
-### 6. Run evaluation
-
-```bash
-python scripts/run_eval.py
-```
-
-### 7. Run the Streamlit demo
+### 6. Run the demo UI
 
 ```bash
 streamlit run app/ui/streamlit_app.py
+```
+
+### 7. Run the benchmark
+
+```bash
+python scripts/run_eval.py
 ```
 
 ### 8. Run the MCP server
@@ -97,58 +143,35 @@ streamlit run app/ui/streamlit_app.py
 python -m app.mcp_server
 ```
 
-## API endpoints
+## API Surface
 
-- `GET /health` public health route
-- `POST /api/v1/ingest` requires `X-API-Key`
-- `POST /api/v1/ask` requires `X-API-Key`
-- `POST /api/v1/evaluate` requires `X-API-Key`
-- `GET /api/v1/tools/ticket/{ticket_id}` requires `X-API-Key`
-- `GET /api/v1/tools/error/{error_code}` requires `X-API-Key`
-- `POST /api/v1/tools/follow-up` requires `X-API-Key`
+- `GET /health`
+- `POST /api/v1/ingest`
+- `POST /api/v1/ask`
+- `POST /api/v1/evaluate`
+- `GET /api/v1/tools/ticket/{ticket_id}`
+- `GET /api/v1/tools/error/{error_code}`
+- `POST /api/v1/tools/follow-up`
 
-## Security posture
+## Security Posture
 
-- API routes are protected with a shared demo secret for local testing.
-- Tool access is explicit and allowlisted.
-- Tool inputs are validated and constrained.
-- Follow-up note creation writes only to local mock data used for demos.
-- The assistant returns a fallback response when evidence is weak rather than overclaiming.
+- API routes require an `X-API-Key` header in demo mode.
 - Every response includes an `X-Request-ID` header for traceability.
+- Tool access is explicit and allowlisted.
+- Follow-up note creation is constrained to local mock data.
+- Low-confidence answers fall back to a safer response instead of overclaiming.
+- Dummy config and mock data are included so the project is demoable without exposing real support systems.
 
-## Dummy demo data
+## Why Employers Care About This Repo
 
-- The repo includes a dummy support corpus covering MFA, VPN, onboarding, device replacement, and AWS sandbox access.
-- Mock ticket and error-code data back the safe tools so the workflow is testable with no external systems.
-- The local config values are non-secret placeholders designed for extractive-mode demos.
+- It shows system design, not just model usage.
+- It demonstrates evaluation and safety thinking, not just a chatbot UI.
+- It proves the work can be packaged as an API, a UI, scripts, tests, and deployable infrastructure.
 
-## Example response shape
+## Next Improvements
 
-```json
-{
-  "answer": "To reset MFA after a lost phone, open the helpdesk portal and request an identity verification reset from the IAM team. A temporary bypass code is valid for 24 hours. [remote_access_policy.md lines 11-18]",
-  "citations": [
-    {
-      "source": "remote_access_policy.md",
-      "line_start": 11,
-      "line_end": 18,
-      "snippet": "If an employee loses a device..."
-    }
-  ],
-  "confidence": 0.77,
-  "evaluation": {
-    "relevance": 0.82,
-    "faithfulness": 0.89,
-    "retrieval_hit": 1.0
-  },
-  "fallback_used": false
-}
-```
-
-## Recommended next extensions
-
-- Replace the dummy knowledge base with internal support content
-- Swap shared-header auth for a real identity provider or signed service tokens
-- Swap Chroma for pgvector if PostgreSQL is already in use
-- Add LangSmith, MLflow, or OpenTelemetry tracing for deeper observability
+- Improve extractive answer compression so CSV-backed answers cite only the most relevant rows.
+- Add tracing for ingest, retrieval, and generation latency.
+- Add role-based auth or signed service tokens instead of the shared demo token.
+- Swap the local evaluation heuristics for a stronger judge or human review workflow when moving past the demo stage.
 

@@ -1,0 +1,122 @@
+{
+  "sample_count": 6,
+  "average_relevance": 0.5669,
+  "average_faithfulness": 0.7406,
+  "average_retrieval_hit": 1.0,
+  "details": [
+    {
+      "question": "How do I reset MFA after losing my phone?",
+      "answer": "Based on the retrieved support documentation, the strongest evidence is:\nIf an employee loses a phone or hardware token, they must open a helpdesk request and complete identity verification before MFA can be reset. [remote_access_policy.md lines 1-7]\nIf the user also lost a device, reset MFA only after identity verification is completed and the incident is linked to the support ticket. [identity_incident_runbook.md lines 1-7]",
+      "citations": [
+        {
+          "source": "remote_access_policy.md",
+          "line_start": 1,
+          "line_end": 7,
+          "snippet": "# Remote Access Policy\nEmployees must enroll a primary device in MFA before using the VPN or cloud admin tools.\nIf an employee loses a phone or hardware token, they must open a helpdesk request and complete identity verification before MFA "
+        },
+        {
+          "source": "identity_incident_runbook.md",
+          "line_start": 1,
+          "line_end": 7,
+          "snippet": "# Identity Incident Runbook\nIf a user reports a suspicious login, the service desk must revoke active sessions and force a password reset immediately.\nIf the user also lost a device, reset MFA only after identity verification is completed a"
+        }
+      ],
+      "relevance": 0.6667,
+      "faithfulness": 0.85,
+      "retrieval_hit": 1.0,
+      "must_include_coverage": 0.5
+    },
+    {
+      "question": "What should I do when VPN error 742 appears?",
+      "answer": "Based on the retrieved support documentation, the strongest evidence is:\nIf the VPN client shows error 742, restart the machine and confirm the TAP adapter is enabled in Device Manager. [laptop_troubleshooting.md lines 1-7]\nRow 1: error_code: 742 | symptom: VPN adapter did not initialize | recommended_action: Restart the device and confirm the TAP adapter is enabled | owner: network-operations\nRow 2: error_code: 809 | symptom: Remote gateway unreachable | recommended_action: Confirm local internet access and verify the home firewall is not blocking VPN ports | owner: network-operations\nRow 3: error_code: A17 | symptom: Identity verification timed out | recommended_action: Restart the verification session and confirm the webcam prompt is allowed | owner: identity-access [vpn_error_reference.csv lines 1-3]",
+      "citations": [
+        {
+          "source": "laptop_troubleshooting.md",
+          "line_start": 1,
+          "line_end": 7,
+          "snippet": "# Laptop Troubleshooting Guide\nIf a Windows laptop fails to connect to Wi-Fi after an update, the user should forget the network profile and reconnect.\nIf the VPN client shows error 742, restart the machine and confirm the TAP adapter is en"
+        },
+        {
+          "source": "vpn_error_reference.csv",
+          "line_start": 1,
+          "line_end": 3,
+          "snippet": "Row 1: error_code: 742 | symptom: VPN adapter did not initialize | recommended_action: Restart the device and confirm the TAP adapter is enabled | owner: network-operations\nRow 2: error_code: 809 | symptom: Remote gateway unreachable | reco"
+        }
+      ],
+      "relevance": 0.4286,
+      "faithfulness": 0.8448,
+      "retrieval_hit": 1.0,
+      "must_include_coverage": 1.0
+    },
+    {
+      "question": "How long is the self-service password reset link valid?",
+      "answer": "Based on the retrieved support documentation, the strongest evidence is:\nanswer: The self-service password reset link is valid for 15 minutes. [password_reset_faq.csv lines 1-3]",
+      "citations": [
+        {
+          "source": "password_reset_faq.csv",
+          "line_start": 1,
+          "line_end": 3,
+          "snippet": "Row 1: question: How long is a password reset link valid? | answer: The self-service password reset link is valid for 15 minutes. | owner: identity-team\nRow 2: question: Can contractors use self-service reset? | answer: Contractors cannot u"
+        }
+      ],
+      "relevance": 0.7778,
+      "faithfulness": 0.5263,
+      "retrieval_hit": 1.0,
+      "must_include_coverage": 1.0
+    },
+    {
+      "question": "What is the process for a swollen laptop battery?",
+      "answer": "Based on the retrieved support documentation, the strongest evidence is:\nDevice Replacement Policy\nBattery swelling, smoke, or repeated thermal shutdown requires the user to power off the device immediately and stop charging it. [device_replacement_policy.md lines 1-7]\nBattery swelling or repeated thermal shutdown requires immediate device replacement and a safety escalation. [laptop_troubleshooting.md lines 7-9]",
+      "citations": [
+        {
+          "source": "device_replacement_policy.md",
+          "line_start": 1,
+          "line_end": 7,
+          "snippet": "# Device Replacement Policy\nBattery swelling, smoke, or repeated thermal shutdown requires the user to power off the device immediately and stop charging it.\nThe service desk must create a safety incident and arrange a replacement shipment "
+        },
+        {
+          "source": "laptop_troubleshooting.md",
+          "line_start": 7,
+          "line_end": 9,
+          "snippet": "Users should collect the VPN diagnostic bundle before escalating to the network team.\nBattery swelling or repeated thermal shutdown requires immediate device replacement and a safety escalation."
+        }
+      ],
+      "relevance": 0.4286,
+      "faithfulness": 0.7333,
+      "retrieval_hit": 1.0,
+      "must_include_coverage": 0.5
+    },
+    {
+      "question": "When is AWS sandbox access approved for new users?",
+      "answer": "Based on the retrieved support documentation, the strongest evidence is:\nCloud Access FAQ\nAWS sandbox access is approved within one business day after the manager and cloud governance group approve the request. [cloud_access_faq.md lines 1-7]",
+      "citations": [
+        {
+          "source": "cloud_access_faq.md",
+          "line_start": 1,
+          "line_end": 7,
+          "snippet": "# Cloud Access FAQ\nAWS sandbox access is approved within one business day after the manager and cloud governance group approve the request.\nUsers who see repeated console sign-out loops should clear their identity provider cookies and retry"
+        }
+      ],
+      "relevance": 0.5,
+      "faithfulness": 0.72,
+      "retrieval_hit": 1.0,
+      "must_include_coverage": 1.0
+    },
+    {
+      "question": "What should the service desk capture during a suspicious login incident?",
+      "answer": "Based on the retrieved support documentation, the strongest evidence is:\nIdentity Incident Runbook\nIf a user reports a suspicious login, the service desk must revoke active sessions and force a password reset immediately. [identity_incident_runbook.md lines 1-7]",
+      "citations": [
+        {
+          "source": "identity_incident_runbook.md",
+          "line_start": 1,
+          "line_end": 7,
+          "snippet": "# Identity Incident Runbook\nIf a user reports a suspicious login, the service desk must revoke active sessions and force a password reset immediately.\nIf the user also lost a device, reset MFA only after identity verification is completed a"
+        }
+      ],
+      "relevance": 0.6,
+      "faithfulness": 0.7692,
+      "retrieval_hit": 1.0,
+      "must_include_coverage": 0.0
+    }
+  ]
+}
